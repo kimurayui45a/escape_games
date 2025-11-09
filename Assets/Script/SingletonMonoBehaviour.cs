@@ -41,7 +41,7 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
                 var obj = new GameObject(typeof(T).ToString());
                 instance = obj.AddComponent<T>();
 
-                // シーン遷移で破棄されないように
+                // シーン遷移で破棄されないように(これのおかげで消えない)
                 DontDestroyOnLoad(obj);
             }
         }
@@ -71,6 +71,10 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
         {
             // 初回の確定登録
             instance = this as T;
+
+            //親が付いていたら外してルート化（見た目は維持）
+            if (transform.parent != null)
+                transform.SetParent(null, true);
 
             // シーン遷移でも残す
             DontDestroyOnLoad(instance.gameObject);
