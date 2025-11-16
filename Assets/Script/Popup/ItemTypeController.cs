@@ -20,4 +20,5 @@ public class ItemTypeController : MonoBehaviour
     public string DisplayName => displayName;
 
     // ※必要になったら、詳細データ（ScriptableObjectやアイコン等）を追加して拡張可
+
 }

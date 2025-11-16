@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f225522015194204289b13c05f5bf5fa, type: 3}
+  m_Name: ItemDataSO
+  m_EditorClassIdentifier: 
+  itemDataObjectList:
+  - itemBasicData:
+      itemBookNo: 0
+      itemNameType: 0
+      itemName: "\u30A2\u30A4\u30C6\u30E0A"
+      itemImage: {fileID: 21300000, guid: 772f5fb5f24ee594bb0f9993360c85ce, type: 3}
+      itemExplanation: "\u3055\u304F\u3089\u3093\u307C"
+      itemLevel: 1
+      relatedItemsTypeList: 0000000001000000
+    itemPurposeType: 0
+    itemSkillData:
+      itemAttributeType: 0
+      itemHp: 0
+      itemAttack: 0
+    itemConsumableFlag: 1
+    itemPrice: 100
+    itemFoodFlag: 1
+  - itemBasicData:
+      itemBookNo: 1
+      itemNameType: 1
+      itemName: "\u3044\u3061\u3054"
+      itemImage: {fileID: 21300000, guid: 643a146ff29b43b47af21e63472fbe11, type: 3}
+      itemExplanation: "\u3044\u3061\u3054\u306E\u8AAC\u660E"
+      itemLevel: 2
+      relatedItemsTypeList: 01000000
+    itemPurposeType: 2
+    itemSkillData:
+      itemAttributeType: 1
+      itemHp: 100
+      itemAttack: 200
+    itemConsumableFlag: 1
+    itemPrice: 200
+    itemFoodFlag: 1
+  - itemBasicData:
+      itemBookNo: 2
+      itemNameType: 2
+      itemName: "\u307F\u304B\u3093"
+      itemImage: {fileID: 21300000, guid: ac5567f9bd0aab346af17c5b66f30091, type: 3}
+      itemExplanation: "\u3048\u3072\u3081\u3055\u3093"
+      itemLevel: 3
+      relatedItemsTypeList: 000000000100000002000000
+    itemPurposeType: 1
+    itemSkillData:
+      itemAttributeType: 1
+      itemHp: 20
+      itemAttack: 30
+    itemConsumableFlag: 1
+    itemPrice: 50
+    itemFoodFlag: 1
+  - itemBasicData:
+      itemBookNo: 3
+      itemNameType: 3
+      itemName: "\u30B9\u30A4\u30AB"
+      itemImage: {fileID: 21300000, guid: 29c9472258b9efc49b8428007991e35c, type: 3}
+      itemExplanation: "\u304B\u3061\u308F\u308C"
+      itemLevel: 5
+      relatedItemsTypeList: 
+    itemPurposeType: 2
+    itemSkillData:
+      itemAttributeType: 1
+      itemHp: 10
+      itemAttack: 20
+    itemConsumableFlag: 1
+    itemPrice: 0
+    itemFoodFlag: 1

@@ -11,10 +11,14 @@ using UnityEngine.UI;
 /// </summary>
 public class PopupView : MonoBehaviour, IPointerClickHandler
 {
+    
     [Header("UI")]
     [SerializeField] private RectTransform popup;      // 自身のRectTransform
-    [SerializeField] private TMP_Text titleText;
     [SerializeField] private Button closeButton;
+
+    // 共通しない下の要素は継承先に持たせる
+    [SerializeField] private TMP_Text titleText;
+    
 
     /// <summary>Canvas が Screen Space - Camera / World の場合に使うカメラ。Overlayなら null</summary>
     public Camera UiCamera { get; set; }
