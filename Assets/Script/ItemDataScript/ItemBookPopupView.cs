@@ -1,14 +1,14 @@
 using System.Linq;
 using UnityEngine;
 
-public class ItemBookPopupView : PopupView
+public class ItemBookPopupView : PopupViewScript
 {
     public static ItemBookPopupView Instance { get; private set; }
 
     [Header("Setup")]
     [SerializeField] private ItemDataSO itemDataSO;          // ここにSOをアサイン
     [SerializeField] private ItemBookBtn itemBookBtnPrefab;  // ここにボタンのPrefabをアサイン
-   //[SerializeField] private Transform contentParent;         // ここに配置先(Vertical/Horizontal/Grid)をアサイン
+    [SerializeField] private Transform contentParent;         // ここに配置先(Vertical/Horizontal/Grid)をアサイン
 
     public void Awake()
     {
@@ -33,7 +33,7 @@ public class ItemBookPopupView : PopupView
 
         foreach (var data in ordered)
         {
-            var btn = Instantiate(itemBookBtnPrefab);
+            var btn = Instantiate(itemBookBtnPrefab, contentParent);
             btn.SetUpItemDetail(data);
         }
 
