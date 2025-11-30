@@ -7,9 +7,9 @@ public class EscapeGamePopup : PopupViewScript
     // 共通しない下の要素は継承先に持たせる
     [SerializeField] private TMP_Text titleText;
 
-    public override void Setup(object payload)      // ← override & object 受け
+    public override void Setup(string id)      // ← override & object 受け
     {
-        var title = payload as string;              // 期待型にキャスト
+        var title = id as string;              // 期待型にキャスト
         if (titleText) titleText.text = title ?? string.Empty;
     }
 }

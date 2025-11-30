@@ -30,6 +30,6 @@ public class PopupViewScript : MonoBehaviour
 
     public Button CloseButton => closeButton;
 
-    public virtual void Setup(object payload) { }
+    public virtual void Setup(string id) { }
 
 }

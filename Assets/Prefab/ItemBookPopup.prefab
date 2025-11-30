@@ -717,7 +717,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4337883106010027571
 Transform:
   m_ObjectHideFlags: 0
@@ -748,6 +748,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popup: {fileID: 5918099470883093767}
   closeButton: {fileID: 1201031045717640203}
-  titleText: {fileID: 4708693049713098059}
   itemDataSO: {fileID: 11400000, guid: ecf7b5810d460b74ea5285ec73976c8b, type: 2}
   itemBookBtnPrefab: {fileID: 4902537533301750385, guid: fd90127268268d34d9c1fd7107376948, type: 3}
+  contentParent: {fileID: 0}

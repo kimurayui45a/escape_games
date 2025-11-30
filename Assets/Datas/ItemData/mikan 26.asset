@@ -10,21 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4dd657abd0273cc4b8f18d01369dc501, type: 3}
-  m_Name: ActionItem1
+  m_Name: mikan 26
   m_EditorClassIdentifier: 
   itemBasicData:
-    itemBookNo: 0
-    itemNameType: 0
-    itemName: 
-    itemImage: {fileID: 0}
-    itemExplanation: 
+    itemBookNo: EX0019
+    itemNameType: 2
+    itemName: nasi
+    itemImage: {fileID: 21300000, guid: 5fed2e3ec2d8ac748be998e037bf11ba, type: 3}
+    itemExplanation: vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
     itemLevel: 0
     relatedItemsTypeList: 
+    hintText: hint
+    noImg: {fileID: 21300000, guid: 29c9472258b9efc49b8428007991e35c, type: 3}
   itemPurposeType: 0
-  itemSkillData:
-    itemAttributeType: 0
-    itemHp: 0
-    itemAttack: 0
   itemConsumableFlag: 0
   itemPrice: 0
   itemFoodFlag: 0

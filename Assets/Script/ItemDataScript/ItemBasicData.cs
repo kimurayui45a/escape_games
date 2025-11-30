@@ -7,11 +7,13 @@ using UnityEngine;
 [System.Serializable]
 public class ItemBasicData
 {
-    public int itemBookNo;
+    public string itemBookNo;
     public ItemNameType itemNameType;
     public string itemName;
     public Sprite itemImage;
     public string itemExplanation;
     public int itemLevel;
     public List<ItemNameType> relatedItemsTypeList = new();
+    public string hintText;
+    public Sprite noImg;
 }

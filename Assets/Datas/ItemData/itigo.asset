@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0237edfd7f29da646a22437ceac3ffba, type: 3}
+  m_Name: itigo
+  m_EditorClassIdentifier: 
+  itemBasicData:
+    itemBookNo: CO0002
+    itemNameType: 1
+    itemName: ichigo
+    itemImage: {fileID: 21300000, guid: 643a146ff29b43b47af21e63472fbe11, type: 3}
+    itemExplanation: 
+    itemLevel: 0
+    relatedItemsTypeList: 
+    hintText: hint
+    noImg: {fileID: 21300000, guid: 29c9472258b9efc49b8428007991e35c, type: 3}
+  itemPurposeType: 1
+  itemConsumableFlag: 0
+  itemPrice: 0
+  itemFoodFlag: 0

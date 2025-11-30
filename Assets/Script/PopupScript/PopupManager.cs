@@ -13,11 +13,11 @@ public class PopupManager : MonoBehaviour
     [SerializeField] private List<PopupData> entries = new(); // インスペクタで紐付け
 
     // 実行時キャッシュ
-    private Dictionary<PopupType, PopupViewScript> _map; // Type -> Prefab
-    private PopupViewScript _current;                    // 現在表示中（同時1個想定）
+    private Dictionary<PopupType, PopupViewScript> map; // Type -> Prefab
+    private PopupViewScript current;                    // 現在表示中（同時1個想定）
 
     /// <summary>いま何か表示しているか</summary>
-    public bool IsOpen => _current != null;
+    public bool IsOpen => current != null;
 
     private void Awake()
     {
@@ -26,7 +26,7 @@ public class PopupManager : MonoBehaviour
         Instance = this;
 
         // レジストリを辞書化（null を除去し、Type 重複は先勝ち）
-        _map = entries?
+        map = entries?
             .Where(e => e != null && e.prefab != null)
             .GroupBy(e => e.type)
             .ToDictionary(g => g.Key, g => g.First().prefab)
@@ -40,9 +40,9 @@ public class PopupManager : MonoBehaviour
     /// Type 指定でポップアップを開く。既存があれば破棄して差し替え。
     /// payload は派生 PopupViewScript の Setup で受け取る想定（任意）。
     /// </summary>
-    public PopupViewScript Show(PopupType type, object payload = null)
+    public PopupViewScript Show(PopupType type, string payload = null)
     {
-        if (!_map.TryGetValue(type, out var prefab) || !prefab)
+        if (!map.TryGetValue(type, out var prefab) || !prefab)
         {
             Debug.LogWarning($"[PopupManager] Prefab not registered for type: {type}");
             return null;
@@ -53,31 +53,31 @@ public class PopupManager : MonoBehaviour
 
         // 生成
         var parent = popupContainer ? popupContainer : transform;
-        _current = Instantiate(prefab, parent);
-        _current.name = $"{type} (Runtime)";
+        current = Instantiate(prefab, parent);
+        current.name = $"{type} (Runtime)";
 
         // 初期化（必要なデータを渡す）
-        _current.Setup(payload); // PopupViewScript 側で virtual Setup(object) を実装しておく
+        current.Setup(payload); // PopupViewScript 側で virtual Setup(object) を実装しておく
 
         // もし基底に Close ボタンがあるならここでフック（任意）
-        _current.CloseButton?.onClick.AddListener(Close);
+        current.CloseButton?.onClick.AddListener(Close);
 
         // アニメがあるなら OpenRoutine を回す設計でも可
-        // StartCoroutine(_current.OpenRoutine());
+        // StartCoroutine(current.OpenRoutine());
 
-        return _current;
+        return current;
     }
 
     /// <summary>表示中を閉じる（演出なしの即破棄）</summary>
     public void Close()
     {
-        if (_current == null) return;
-        Destroy(_current.gameObject);
-        _current = null;
+        if (current == null) return;
+        Destroy(current.gameObject);
+        current = null;
     }
 
     /// <summary>型を指定して取りたい場合（キャスト付き）</summary>
-    public T Show<T>(PopupType type, object payload = null) where T : PopupViewScript
+    public T Show<T>(PopupType type, string payload = null) where T : PopupViewScript
     {
         var v = Show(type, payload);
         return v as T;

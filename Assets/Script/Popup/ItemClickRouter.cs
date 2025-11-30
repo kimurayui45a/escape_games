@@ -35,7 +35,8 @@ public class ItemClickRouter : MonoBehaviour, IPointerClickHandler
                 break;
 
             case ItemType.Pond:
-                Popup.Instance?.Show(itemType, extraMessage: "‘ê");
+                //Popup.Instance?.Show(itemType, extraMessage: "‘ê");
+                PopupManager.Instance?.Show(PopupType.DifferenceSpotScript, "DF0001");
                 break;
 
             case ItemType.Wall:

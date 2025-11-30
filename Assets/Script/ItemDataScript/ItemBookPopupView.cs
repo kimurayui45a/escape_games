@@ -12,30 +12,30 @@ public class ItemBookPopupView : PopupViewScript
 
     public void Awake()
     {
-        if (!itemDataSO || itemDataSO.itemDataObjectList == null)
-        {
-            Debug.LogWarning("[ItemBookPopupView] ItemDataSO 未設定または空です。", this);
-            return;
-        }
-        if (!itemBookBtnPrefab)
-        {
-            Debug.LogWarning("[ItemBookPopupView] Prefab もしくは配置先が未設定です。", this);
-            return;
-        }
+        //if (!itemDataSO || itemDataSO.itemDataObjectList == null)
+        //{
+        //    Debug.LogWarning("[ItemBookPopupView] ItemDataSO 未設定または空です。", this);
+        //    return;
+        //}
+        //if (!itemBookBtnPrefab)
+        //{
+        //    Debug.LogWarning("[ItemBookPopupView] Prefab もしくは配置先が未設定です。", this);
+        //    return;
+        //}
 
-        // 既存の子要素をクリア
-        //ClearChildren(contentParent);
+        //// 既存の子要素をクリア
+        ////ClearChildren(contentParent);
 
-        // itemBasicData があるものだけを対象にし、itemBookNo 昇順に並べる
-        var ordered = itemDataSO.itemDataObjectList
-            .Where(d => d != null && d.itemBasicData != null)
-            .OrderBy(d => d.itemBasicData.itemBookNo);
+        //// itemBasicData があるものだけを対象にし、itemBookNo 昇順に並べる
+        //var ordered = itemDataSO.itemDataObjectList
+        //    .Where(d => d != null && d.itemBasicData != null)
+        //    .OrderBy(d => d.itemBasicData.itemBookNo);
 
-        foreach (var data in ordered)
-        {
-            var btn = Instantiate(itemBookBtnPrefab, contentParent);
-            btn.SetUpItemDetail(data);
-        }
+        //foreach (var data in ordered)
+        //{
+        //    var btn = Instantiate(itemBookBtnPrefab, contentParent);
+        //    btn.SetUpItemDetail(data);
+        //}
 
         // レイアウトがある場合は、必要に応じて強制リビルド
         // var rect = contentParent as RectTransform;
