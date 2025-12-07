@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df4d83bf482e7f349ad22c6718bfdbd7, type: 3}
+  m_Name: Event003
+  m_EditorClassIdentifier: 
+  ScreenType: 1
+  EventId: Event003
+  Title: Event003 Title
+  Message: Event003 Message\n0123456789------------------------
+  ConditionDataParamA:
+    ComparisonType: 2
+    Param: 0
+  UnlockConditions:
+  - {fileID: 11400000, guid: 9d138438a1b9e0b4d94301f1ef484655, type: 2}

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(Collider2D))]
+//[RequireComponent(typeof(Collider2D))]
 public class DifferenceSpot : MonoBehaviour, IPointerClickHandler
 {
     [Header("クリックしたら出すログ文言")]
@@ -9,6 +9,17 @@ public class DifferenceSpot : MonoBehaviour, IPointerClickHandler
 
     [Header("クリック時に座標なども一緒に出すか")]
     [SerializeField] private bool includeContext = true;
+
+    // どのポップアップに通知するか
+    private DifferenceSpotPopup ownerPopup;
+
+    /// <summary>
+    /// Popup 側から呼んで、通知先をセットする
+    /// </summary>
+    public void Initialize(DifferenceSpotPopup popup)
+    {
+        ownerPopup = popup;
+    }
 
     /// <summary>
     /// EventSystem + Physics2DRaycaster 経由のクリックコールバック
@@ -24,6 +35,12 @@ public class DifferenceSpot : MonoBehaviour, IPointerClickHandler
         else
         {
             Debug.Log(logText);
+        }
+
+        // 親ポップアップに「このオブジェクトがクリックされた」と通知
+        if (ownerPopup != null)
+        {
+            ownerPopup.OnSpotClicked(gameObject);
         }
     }
 }

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 972b61f3866480c41b2a43f152382b56, type: 3}
+  m_Name: MergeGameSO
+  m_EditorClassIdentifier: 
+  mergeGameStageNo: MG001
+  mergeGameStageName: stage1
+  mergeGameStagePrefab: {fileID: 2277840623262251661, guid: 21aee2da00271c84c8b6a21fd90d13cc, type: 3}
+  mergeGameItemList:
+  - {fileID: 8372905550038353714, guid: fb563bb343999a046ae29b5e61664c3e, type: 3}
+  - {fileID: 8372905550038353714, guid: c0d7c763f04311248a2dde09f3610fc1, type: 3}
+  - {fileID: 8372905550038353714, guid: 675ec6062b86e784595266cc37a00b14, type: 3}
+  - {fileID: 8372905550038353714, guid: af170ac6a305deb49b29d128b272f901, type: 3}

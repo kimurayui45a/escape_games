@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8500ff83e0ae1a442bfae1f83ca5c272, type: 3}
   m_Name: DifferenceSpotSO
   m_EditorClassIdentifier: 
-  differenceStageNo: 
-  differenceStageName: 
-  differenceSpotPrefab: {fileID: 0}
-  differenceSpot: 0
+  differenceStageNo: DF0001
+  differenceStageName: stage1
+  differenceSpotPrefab: {fileID: 3630273180429605393, guid: b43b093812687be4b92ba9170bb1e111, type: 3}
+  differenceSpot: 3

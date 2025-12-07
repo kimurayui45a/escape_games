@@ -31,7 +31,7 @@ public class ItemClickRouter : MonoBehaviour, IPointerClickHandler
 
             case ItemType.Tree:
                 //Popup.Instance?.Show(itemType, extraMessage: "–Ø");
-                PopupManager.Instance?.Show(PopupType.EscapeGamePopup, "tree");
+                PopupManager.Instance?.Show(PopupType.MergeGamePopup, "MG001");
                 break;
 
             case ItemType.Pond:

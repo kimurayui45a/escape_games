@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f43519c068c6ae499e449a3a8f1fd73, type: 3}
-  m_Name: DifferenceStageSO
+  m_Script: {fileID: 11500000, guid: 6e98f5a862db6bc48895b4e607f9aa65, type: 3}
+  m_Name: MergeGameStageSO
   m_EditorClassIdentifier: 
-  differenceSpotSOList:
-  - {fileID: 11400000, guid: 2e481d41ba666374abc6bdf30adc2004, type: 2}
+  mergeGameSOList:
+  - {fileID: 11400000, guid: 23463816437e91342a407453f33bc1bd, type: 2}
