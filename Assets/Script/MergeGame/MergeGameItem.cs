@@ -26,52 +26,50 @@ public class MergeGameItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [Header("合体後に生成する次段階のフルーツプレハブ")]
     [SerializeField] private MergeGameItem nextFruitsPrefab;
 
-    [Header("合体とみなす距離（ワールド座標）")]
-    [SerializeField] private float mergeDistance = 80f;
+    [Header("合体とみなす距離（UI上の判定）")]
+    [SerializeField] private float mergeDistance = 0.5f; // 今は width 判定で実質使っていないが一旦そのまま
 
     // ドラッグ開始時の位置（戻す用）
     private Vector3 startPosition;
 
-    /// <summary>
-    /// ドラッグ開始時に呼ばれる
-    /// </summary>
-    public void OnBeginDrag(PointerEventData eventData)
+    // キャッシュ用：ステージ
+    private MergeGameStageScript stage;
+
+    private void Awake()
     {
-        // 今の位置を保存しておく（合体しなかったら戻す用）
-        startPosition = transform.position;
+        // 自分より上の階層からステージスクリプトを探してキャッシュ
+        stage = GetComponentInParent<MergeGameStageScript>();
+        if (stage == null)
+        {
+            Debug.LogWarning($"[MergeGameItem] 親に MergeGameStageScript が見つかりません: {name}", this);
+        }
     }
 
-    /// <summary>
-    /// ドラッグ中に呼ばれる
-    /// </summary>
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        startPosition = transform.position;
+        transform.SetAsLastSibling();  // UI 的に最前面へ
+    }
+
     public void OnDrag(PointerEventData eventData)
     {
         transform.position = eventData.position;
     }
 
-    /// <summary>
-    /// ドラッグ終了時に呼ばれる
-    /// </summary>
     public void OnEndDrag(PointerEventData eventData)
     {
-        // ドロップ位置付近に「同種のフルーツ」がいるか探す
         MergeGameItem target = FindMergeTarget();
 
         if (target != null)
         {
-            // 見つかったら合体処理
             MergeWith(target);
         }
         else
         {
-            // 見つからなければ元の位置に戻す
             transform.position = startPosition;
         }
     }
 
-    /// <summary>
-    /// 自分の近くに「同じ種類」のフルーツがいるか探す
-    /// </summary>
     private MergeGameItem FindMergeTarget()
     {
         MergeGameItem[] allFruits = FindObjectsByType<MergeGameItem>(FindObjectsSortMode.None);
@@ -80,50 +78,68 @@ public class MergeGameItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         foreach (var f in allFruits)
         {
-            if (f == this) continue;                         // 自分自身は無視
-            if (f.fruitsType != fruitsType) continue;       // 種類が違うものは対象外
+            if (f == this) continue;
+            if (f.fruitsType != fruitsType) continue;
+
+            var rt1 = transform as RectTransform;
+            var rt2 = f.transform as RectTransform;
+            if (rt1 == null || rt2 == null) continue;
+
+            float width1 = rt1.sizeDelta.x * 0.5f;
+            float width2 = rt2.sizeDelta.x * 0.5f;
 
             float dist = Vector2.Distance(transform.position, f.transform.position);
             Debug.Log($"dist to {f.name} = {dist}");
 
-            if (dist < mergeDistance && dist < bestDist)
+            // 幅の合計以内なら「重なった」とみなす
+            if (dist < (width1 + width2) && dist < bestDist)
             {
                 bestDist = dist;
                 best = f;
             }
         }
 
-        return best;    // 条件を満たす最近傍が返る（いなければ null）
+        return best;
     }
 
-    /// <summary>
-    /// 指定のフルーツと合体して次の段階を生成
-    /// </summary>
     private void MergeWith(MergeGameItem other)
     {
         if (nextFruitsPrefab == null)
         {
+            Debug.LogWarning($"[MergeGameItem] nextFruitsPrefab が未設定のため、マージできません: {name}", this);
             Destroy(gameObject);
             return;
         }
 
-        // 親は「された側」と同じ（Grid の子として出したい）
-        Transform parent = other.transform.parent;
+        // 親は基本的に「ステージの ItemsRoot (= GridImage)」
+        Transform parent = null;
+        if (stage != null && stage.ItemsRoot != null)
+        {
+            parent = stage.ItemsRoot;
+        }
+        else
+        {
+            // 念のためフォールバック：された側と同じ親
+            parent = other.transform.parent;
+        }
 
-        // 位置は「された側」と同じ anchoredPosition を使う
         var otherRect = other.transform as RectTransform;
 
+        // 元2つを削除
         Destroy(other.gameObject);   // された側
         Destroy(gameObject);         // 自分
 
+        // 親を指定して生成（GridImage の子として出る）
         var next = Instantiate(nextFruitsPrefab, parent);
 
         var nextRect = next.transform as RectTransform;
         if (otherRect != null && nextRect != null)
         {
+            // GridImage の座標系は同じなので、そのスロット位置をそのまま引き継ぐ
             nextRect.anchoredPosition = otherRect.anchoredPosition;
             nextRect.localScale = otherRect.localScale;
         }
-    }
 
+        Debug.Log($"[MergeGameItem] Merged into {next.name} under parent {parent.name}");
+    }
 }
