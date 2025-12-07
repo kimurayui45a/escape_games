@@ -101,22 +101,29 @@ public class MergeGameItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     /// </summary>
     private void MergeWith(MergeGameItem other)
     {
-        // 上位フルーツが設定されていない場合は、
-        // ドラッグしている自分だけ消して終了
         if (nextFruitsPrefab == null)
         {
-            Destroy(gameObject);          // 自分だけ削除
+            Destroy(gameObject);
             return;
         }
 
-        // 生成位置は「された側（other）」の位置だけ使う
-        Vector3 spawnPos = other.transform.position;
+        // 親は「された側」と同じ（Grid の子として出したい）
+        Transform parent = other.transform.parent;
 
-        // もとの2つを削除
-        Destroy(other.gameObject);        // された側
-        Destroy(gameObject);              // ドラッグしていた自分
+        // 位置は「された側」と同じ anchoredPosition を使う
+        var otherRect = other.transform as RectTransform;
 
-        // 回転は一切付けない（Quaternion.identity）
-        Instantiate(nextFruitsPrefab, spawnPos, Quaternion.identity);
+        Destroy(other.gameObject);   // された側
+        Destroy(gameObject);         // 自分
+
+        var next = Instantiate(nextFruitsPrefab, parent);
+
+        var nextRect = next.transform as RectTransform;
+        if (otherRect != null && nextRect != null)
+        {
+            nextRect.anchoredPosition = otherRect.anchoredPosition;
+            nextRect.localScale = otherRect.localScale;
+        }
     }
+
 }

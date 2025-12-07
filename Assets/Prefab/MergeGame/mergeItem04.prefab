@@ -90,4 +90,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fruitsType: 4
   nextFruitsPrefab: {fileID: 0}
-  mergeDistance: 0.5
+  mergeDistance: 80

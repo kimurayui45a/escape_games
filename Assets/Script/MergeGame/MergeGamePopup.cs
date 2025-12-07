@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class MergeGamePopup : PopupViewScript
 {
@@ -66,9 +67,48 @@ public class MergeGamePopup : PopupViewScript
         t.localRotation = Quaternion.identity;
         t.localScale = Vector3.one;
 
-        // 注意：
-        // もし生成した子の内部でも「クリックでログ」を出したい場合は、
-        // 生成済みプレハブ側に Collider2D + クリック用スクリプトを付けておくこと。
+
+        // 1) 生成したステージの中から GridLayoutGroup を探す
+        var grid = spawned.GetComponentInChildren<GridLayoutGroup>(true);
+        if (!grid)
+        {
+            Debug.LogWarning("[MergeGame] ステージ内に GridLayoutGroup が見つかりませんでした。", spawned);
+            return;
+        }
+
+        Transform itemsRoot = grid.transform;
+
+        // 2) 念のため、Grid の子を全削除（デフォルトで何か入っているなら消して差し替える運用）
+        ClearChildren(itemsRoot);
+
+        // 3) ScriptableObject に登録されているアイテムプレハブを並べる
+        if (data.mergeGameItemList != null && data.mergeGameItemList.Length > 0)
+        {
+            foreach (var itemPrefab in data.mergeGameItemList)
+            {
+                if (!itemPrefab) continue;
+
+                // GridLayoutGroup の子として生成
+                var item = Instantiate(itemPrefab, itemsRoot);
+
+                // UI なので localScale / anchoredPosition を初期化しておくと安全
+                var itemRect = item.transform as RectTransform;
+                if (itemRect != null)
+                {
+                    itemRect.localScale = Vector3.one;
+                    itemRect.anchoredPosition3D = Vector3.zero; // 位置は Grid が制御するので気にしなくてOK
+                }
+                else
+                {
+                    item.transform.localScale = Vector3.one;
+                    item.transform.localPosition = Vector3.zero;
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"[MergeGame] mergeGameItemList が空です: {data.mergeGameStageNo}", this);
+        }
     }
 
     /// <summary>

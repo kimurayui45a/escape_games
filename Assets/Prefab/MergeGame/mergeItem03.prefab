@@ -90,4 +90,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fruitsType: 3
   nextFruitsPrefab: {fileID: 8372905550038353714, guid: af170ac6a305deb49b29d128b272f901, type: 3}
-  mergeDistance: 0.5
+  mergeDistance: 80
