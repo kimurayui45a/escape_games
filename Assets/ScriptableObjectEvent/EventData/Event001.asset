@@ -19,9 +19,5 @@ MonoBehaviour:
   ConditionDataParamA:
     ComparisonType: 2
     Param: 0
-  ConditionDataParamB:
-    ComparisonType: 2
-    Param: 0
-  ConditionDataParamC:
-    ComparisonType: 2
-    Param: 0
+  UnlockConditions:
+  - {fileID: 11400000, guid: 7e298639e05670246a269478d6e669ee, type: 2}

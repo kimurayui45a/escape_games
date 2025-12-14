@@ -102,8 +102,16 @@ public class MergeGameItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         return best;
     }
 
+    /// <summary>
+    /// 指定された MergeGameItem（other）とマージし、
+    /// 次段階のアイテム（nextFruitsPrefab）を生成する。
+    /// ・this … ドラッグしていた側（呼び出し元）
+    /// ・other … ドロップされて「マージ対象」になった側
+    /// </summary>
     private void MergeWith(MergeGameItem other)
     {
+        // 次の段階のプレハブが設定されていない場合は、マージ処理ができないので
+        // 警告を出してドラッグしていた自分（this）のみ削除して終了する
         if (nextFruitsPrefab == null)
         {
             Debug.LogWarning($"[MergeGameItem] nextFruitsPrefab が未設定のため、マージできません: {name}", this);
@@ -111,35 +119,55 @@ public class MergeGameItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             return;
         }
 
-        // 親は基本的に「ステージの ItemsRoot (= GridImage)」
+        // 生成するオブジェクトの親（親Transform）を決める
+        // 基本ルール：
+        //   ・ステージ側(MergeGameStageScript)が ItemsRoot を持っていれば、それを親にする
+        //   ・なければ、フォールバックとして「other と同じ親（同じスロット階層）」を使う
         Transform parent = null;
         if (stage != null && stage.ItemsRoot != null)
         {
+            // ステージの ItemsRoot (= GridImage) を親にする
             parent = stage.ItemsRoot;
+            Debug.Log($"[MergeGameItem] use stage.ItemsRoot: {stage.ItemsRoot.name}");
         }
         else
         {
-            // 念のためフォールバック：された側と同じ親
+            // ステージ情報が取れない場合の保険：マージ対象と同じ親を利用
             parent = other.transform.parent;
+            Debug.Log($"[MergeGameItem] fallback to other.parent: {other.transform.parent.name}");
         }
 
+        // マージ対象の RectTransform を取得（位置情報を引き継ぐため）
         var otherRect = other.transform as RectTransform;
 
-        // 元2つを削除
+        // ここで一旦、元の2つのアイテムを削除する
+        // ・other … マージされる側（ドロップされた側）
+        // ・this  … ドラッグしていた側
         Destroy(other.gameObject);   // された側
         Destroy(gameObject);         // 自分
 
-        // 親を指定して生成（GridImage の子として出る）
+        // 次の段階のアイテムを生成する
+        // 親を指定して Instantiate することで、GridImage(ItemsRoot) の子として生成される
         var next = Instantiate(nextFruitsPrefab, parent);
 
+        // 生成したオブジェクトの RectTransform を取得して、位置・スケールを調整する
         var nextRect = next.transform as RectTransform;
         if (otherRect != null && nextRect != null)
         {
-            // GridImage の座標系は同じなので、そのスロット位置をそのまま引き継ぐ
-            nextRect.anchoredPosition = otherRect.anchoredPosition;
-            nextRect.localScale = otherRect.localScale;
-        }
+            // まずアンカーとピボットを揃える
+            nextRect.anchorMin = otherRect.anchorMin;
+            nextRect.anchorMax = otherRect.anchorMax;
+            nextRect.pivot = otherRect.pivot;
 
+            // サイズや回転・スケールも必要に応じて揃える
+            nextRect.sizeDelta = otherRect.sizeDelta;
+            nextRect.localRotation = otherRect.localRotation;
+            nextRect.localScale = otherRect.localScale;
+
+            // 最後に anchoredPosition をコピー
+            nextRect.anchoredPosition3D = otherRect.anchoredPosition3D;
+        }
+        // デバッグ用ログ：どの親の下に、どのオブジェクトとしてマージされたかを出力
         Debug.Log($"[MergeGameItem] Merged into {next.name} under parent {parent.name}");
     }
 }
